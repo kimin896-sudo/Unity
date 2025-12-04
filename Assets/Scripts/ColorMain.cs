@@ -20,23 +20,16 @@ public class ColorMain : MonoBehaviour
     {
         for (int i = 0; i < 7; i++)
         {
-            CreateColorObject("Square", i);
+            CreateColorObject("Square"+i, i);
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     Color[] color = { Color.red, Color.orange, Color.yellow, Color.green, Color.magenta, Color.cyan,Color.aliceBlue};
 
     Vector3 v3 = new Vector3(-3, 1,0);
     void CreateColorObject(string name,int ColorNum)
     {
         obj = new GameObject();
-        obj.name = "Square";
-
         // 생성된 GameObject의 SpriteRenderer를 가져오기 
         SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
         // 생성된 GameObject의 Transform가져오기 
@@ -45,6 +38,7 @@ public class ColorMain : MonoBehaviour
         sr.sprite = sprite;
      
         sr.color = color[ColorNum];
-        tf.transform.position = new Vector3(v3.x+ ColorNum, v3.y,0);
+        tf.transform.position = new Vector3(v3.x + ColorNum, v3.y,0);
+
     }
 }
