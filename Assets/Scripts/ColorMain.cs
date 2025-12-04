@@ -36,7 +36,9 @@ public class ColorMain : MonoBehaviour
         Transform tf = obj.transform;
         // sr의 sprite를 받아온 sprite로 변환하기 
         sr.sprite = sprite;
-     
+
+        obj.name = name;
+
         sr.color = color[ColorNum];
         tf.transform.position = new Vector3(v3.x + ColorNum, v3.y,0);
 
