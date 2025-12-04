@@ -8,7 +8,6 @@ public class ColorMain : MonoBehaviour
     [SerializeField]
     private Sprite sprite;
 
-
     enum ColorType
     {
         red,
@@ -19,12 +18,10 @@ public class ColorMain : MonoBehaviour
     }
     void Start()
     {
-        for (int i = 1; i < 8; i++)
+        for (int i = 0; i < 7; i++)
         {
             CreateColorObject("Square", i);
         }
-       
-
     }
 
     // Update is called once per frame
@@ -32,55 +29,22 @@ public class ColorMain : MonoBehaviour
     {
         
     }
+    Color[] color = { Color.red, Color.orange, Color.yellow, Color.green, Color.magenta, Color.cyan,Color.aliceBlue};
+
+    Vector3 v3 = new Vector3(-3, 1,0);
     void CreateColorObject(string name,int ColorNum)
     {
-        
-
         obj = new GameObject();
         obj.name = "Square";
 
+        // 생성된 GameObject의 SpriteRenderer를 가져오기 
         SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+        // 생성된 GameObject의 Transform가져오기 
         Transform tf = obj.transform;
+        // sr의 sprite를 받아온 sprite로 변환하기 
         sr.sprite = sprite;
-
-        switch(ColorNum)
-        {
-            case 1:
-                sr.color = Color.red;
-                tf.transform.position = new Vector3(-3,1);
-                break;
-            case 2:
-                sr.color = Color.orange;
-                tf.transform.position = new Vector3(-2, 1);
-
-                break;
-            case 3:
-                sr.color = Color.yellow;
-                tf.transform.position = new Vector3(-1, 1);
-
-                break;
-            case 4:
-                sr.color = Color.green;
-                tf.transform.position = new Vector3(0, 1);
-
-                break;
-            case 5:
-                sr.color = Color.blue;
-                tf.transform.position = new Vector3(1, 1);
-
-                break;
-            case 6:
-                sr.color = Color.magenta;
-                tf.transform.position = new Vector3(2, 1);
-
-                break;
-            case 7:
-                sr.color = Color.cyan;
-                tf.transform.position = new Vector3(3, 1);
-
-                break;
-            default:
-                break;
-        }
+     
+        sr.color = color[ColorNum];
+        tf.transform.position = new Vector3(v3.x+ ColorNum, v3.y,0);
     }
 }
