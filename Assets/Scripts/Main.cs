@@ -37,7 +37,10 @@ public class Main : MonoBehaviour
             if (sum > 3)
             {
                 player.SetActive(false);
-                sum = 0;
+            }
+            else if(sum >5)
+            {
+                Destroy(player);
             }
         }
     }
