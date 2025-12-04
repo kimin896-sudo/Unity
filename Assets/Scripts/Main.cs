@@ -8,10 +8,11 @@ public class Main : MonoBehaviour
 
     GameObject playerScript;
 
+    private GameObject playerToDestroy;
 
-    
     private void Start()
     {
+        playerToDestroy = GameObject.FindGameObjectWithTag("Player");
     }
 
 
@@ -20,29 +21,37 @@ public class Main : MonoBehaviour
     float sum = 0;
     private void Update()
     {
-        GameObject player = GameObject.Find("Player");
-
 
 
         VecterSum();
         sum += Time.deltaTime;
         //GameObject go = GameObject.Find("Player");
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        
-        if(go!=null)
+       
+        if (playerToDestroy != null)
         {
             //게임오브젝트에서 player 컴퍼넌트를 가져와서 player란 변수에 저장하기 
             //go.name = "CopyPlayer";
 
-            if (sum > 3)
+           
+
+            if (sum > 3 && 5 > sum)
             {
-                player.SetActive(false);
+                playerToDestroy.SetActive(false);
+                Debug.Log("숨김");
             }
-            else if(sum >5)
+            
+            if (sum > 5)
             {
-                Destroy(player);
+                Destroy(playerToDestroy);
+                Debug.Log("삭제 완료");
+
+                // 삭제 후 참조를 null로 설정하고, Update() 실행 중지 (선택 사항)
+                playerToDestroy = null;
             }
+
         }
+
+        
     }
 
     void VecterSum()
@@ -61,7 +70,6 @@ public class Main : MonoBehaviour
         float speed = 0.5f;
         Aobj.position -= normalizedDirection * speed * Time.deltaTime;
 
-        Debug.Log(Aobj.position);
     }
     void CreatePlayer()
     {
