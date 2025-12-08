@@ -13,15 +13,15 @@ public class PlayerScript : MonoBehaviour
     {
         //개인오브젝트가 이미 있을것이다 가정하고 작업 
         GameObject go = gameObject;
-        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+        //SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-        sprite = base.GetComponent<Sprite>();
+        //sprite = base.GetComponent<Sprite>();
 
-        sr.color = Color.blue;
+//        sr.color = Color.blue;
 
         Transform transform = go.GetComponent<Transform>();
         transform.position = new Vector3(5, 0,0);
-        sr.sprite = sprite;
+      
 
     }
 
