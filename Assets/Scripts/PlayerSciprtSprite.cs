@@ -21,7 +21,6 @@ public class PlayerSciprtSprite : MonoBehaviour
     State state;
     Animator animator;
     SpriteRenderer spriteRenderer;
-
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,16 +31,17 @@ public class PlayerSciprtSprite : MonoBehaviour
     void Update()
     {
         UpDateInput();
-        UpDateSkill();
+       
         UpDateAnimation();
     }
+    bool isAttack = false;
     public float speed = 10f;
     void UpDateInput()
     {
         Vector3 moveDirestion = Vector3.zero;
 
         float moveSpeed = speed * Time.deltaTime;
-
+        if(!isAttack)
         if (Input.GetKey(KeyCode.A))
         {
             state = State.Move;
@@ -67,32 +67,33 @@ public class PlayerSciprtSprite : MonoBehaviour
             moveDirestion += Vector3.down;
             playerDirection = PlayerDirection.Down;
         }
+        else if(Input.GetKeyDown(KeyCode.Space))
+        {
+            state = State.Skill;
+                isAttack = true;
+        }
         else
         {
-            state = State.Idle;
+            if (state == State.Skill)
+                return;
+
+                state = State.Idle;
+
         }
         gameObject.transform.position += moveDirestion.normalized * moveSpeed;
     }
 
-    void UpDateSkill()
+ 
+    void PlayerIdle()
     {
-        if(Input.GetMouseButton(0))
-        switch (playerDirection)
-        {
-            case PlayerDirection.Left:
-                    animator.Play("Player_SIde_Attack");
-                break;
-            case PlayerDirection.Right:
-                    animator.Play("Player_SIde_Attack");
-                    break;
-            default:
-                    animator.Play("Player_Attack");
-                    break;
-        }
+        state = State.Idle;
+        isAttack = false;
     }
+
+  
     void UpDateAnimation()
     {
-        if(state == State.Move)
+        if(state == State.Move )
         {
             switch(playerDirection)
             {
@@ -101,7 +102,7 @@ public class PlayerSciprtSprite : MonoBehaviour
                     animator.Play("Player_Side_Walk");
                     break;
                 case PlayerDirection.Up:
-                    animator.Play("Player_Walk");
+                    animator.Play("Player_Up_Walk");
                     break;
                 case PlayerDirection.Right:
                     spriteRenderer.flipX = false;
@@ -116,7 +117,7 @@ public class PlayerSciprtSprite : MonoBehaviour
         }
         else if(state == State.Skill)
         {
-            animator.Play("Player_Side_Attack");
+            animator.Play("Player_SIde_Attack");
         }
         else if(state == State.Idle)
         {
