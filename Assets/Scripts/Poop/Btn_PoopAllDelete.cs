@@ -4,18 +4,29 @@ using UnityEngine.UI;
 public class Btn_PoopAllDelete : MonoBehaviour
 {
     GameObject Poop;
+    Image SkillImage;
+    Button btn;
     void Start()
     {
 
+        SkillImage = GetComponent<Image>();
+         btn = GetComponent<Button>();
 
-        Button btn = GetComponent<Button>();
         btn.onClick.AddListener(BtnClickAllDelete);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if (SkillImage.fillAmount < 1)
+        {
+            SkillImage.fillAmount += Time.deltaTime;
+            btn.interactable = false;
+        }
+        if (SkillImage.fillAmount >= 1)
+        {
+            btn.interactable = true;
+        }
     }
 
     void BtnClickAllDelete()
@@ -28,5 +39,7 @@ public class Btn_PoopAllDelete : MonoBehaviour
             Destroy(obj);
         }
         Debug.Log("전부 삭제합니다.");
+
+        SkillImage.fillAmount = 0;
     }
 }

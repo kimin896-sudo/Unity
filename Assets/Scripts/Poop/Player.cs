@@ -11,15 +11,10 @@ public class Player : MonoBehaviour
     }
 
 
-
-   
     private void Update()
     {
         Vector3 moveDirectio = Vector3.zero;
-
         moveDistance = speed * Time.deltaTime;
-
-   
         if (Input.GetKey(KeyCode.A))
         {
             moveDirectio += Vector3.left;
@@ -28,8 +23,6 @@ public class Player : MonoBehaviour
         {
             moveDirectio += Vector3.right;
         }
-      
-
         gameObject.transform.position += moveDirectio.normalized*moveDistance;
     }
 }

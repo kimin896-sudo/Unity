@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PoopScript : MonoBehaviour
 {
-
+    bool isPlayer = false;
 
     private Player player;
 
@@ -15,51 +15,42 @@ public class PoopScript : MonoBehaviour
     SpriteRenderer sr;
     void Start()
     {
-        gameObject.AddComponent<SpriteRenderer>();
         sr = gameObject.GetComponent<SpriteRenderer>();
 
         typePoop = Random.Range(1, 4);
         speed = Random.Range(3, 10);
         textUI = GameObject.FindGameObjectWithTag("TextUi").GetComponent<TMP_Text>();
-        player = GameObject.FindAnyObjectByType<Player>();
-        Debug.Log(speed);
 
         PoopType();
 
     }
-   
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player")) // 몬스터 태그 확인
+        {
+            isPlayer = true;
+            TextMius();
+            Destroy(gameObject);
+        }
+
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if(!isPlayer)
+            TextChange();
+    }
     void Update()
     {
         
         float moveDisctance = speed * Time.deltaTime;
         gameObject.transform.position += Vector3.down* moveDisctance;
-
-
-        PlayerPotisionDistance();
-        MainOutPoop();
-
     }
 
-    private Vector3 playerDistance;
-    void PlayerPotisionDistance()
-    {
-        playerDistance = player.transform.position - gameObject.transform.position;
-
-        if(playerDistance.magnitude < 1)
-        {
-            TextMius();
-            Destroy(gameObject);
-        }
-    }
-
-    void MainOutPoop()
-    {
-        if(gameObject.transform.position.y < -6f)
-        {
-            TextChange();
-            Destroy(gameObject);
-        }
-    }
 
     enum poopEnum
     {
@@ -93,7 +84,27 @@ public class PoopScript : MonoBehaviour
 
         if (textUI != null)
         {
-            textUI.text = (int.Parse(textUI.text) + 1).ToString();
+            int damage;
+            switch ((poopEnum)typePoop)
+            {
+                case poopEnum.None:
+
+                    break;
+                case poopEnum.Gold:
+                    damage = 200;
+                    textUI.text = (int.Parse(textUI.text) + damage).ToString();
+                    break;
+                case poopEnum.Silver:
+                    damage = 50;
+                    textUI.text = (int.Parse(textUI.text) + damage).ToString();
+                    break;
+                case poopEnum.Nomal:
+                    damage = 1;
+                    textUI.text = (int.Parse(textUI.text) + damage).ToString();
+                    break;
+                default:
+                    break;
+            }
 
         }
         else
